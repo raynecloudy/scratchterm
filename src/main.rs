@@ -36,6 +36,7 @@ fn main() {
             Key::Char('x') => print!("x"),
             Key::Char('y') => print!("y"),
             Key::Char('z') => print!("z"),
+            Key::Backspace => print!("\x08\x1b[J"),
             Key::Ctrl('c') => break,
             _ => (),
         }
