@@ -191,7 +191,7 @@ fn parse_search(stdout: &mut RawTerminal<std::io::Stdout>, query: &String) {
     if query.len() > 0 {
         for i in 0..blocks.len() {
             if blocks[i][0].contains(query) && results < 9 {
-                println!("{}{}\x1b[0m\x1b[{}D", category_colours[category_names.iter().position(|&r| r == blocks[i][1]).unwrap()], blocks[i][0], blocks[i][0].len());
+                println!("{}{}\x1b[0m \x1b[2;3m{}\x1b[0m \x1b[{}D", category_colours[category_names.iter().position(|&r| r == blocks[i][1]).unwrap()], blocks[i][0], blocks[i][1], blocks[i][0].len()+blocks[i][1].len()+2);
                 results += 1;
             }
         }
