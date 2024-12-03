@@ -38,12 +38,15 @@ fn main() {
             Key::Char('y') => { search.push('y'); parse_search(&mut stdout, &search); },
             Key::Char('z') => { search.push('z'); parse_search(&mut stdout, &search); },
             Key::Backspace => {
-                if (search.chars().count() > 0) {
+                if search.chars().count() > 0 {
                     search = search[..search.chars().count()-1].parse().unwrap();
                     parse_search(&mut stdout, &search);
                 }
             },
-            Key::Ctrl('c') => break,
+            Key::Ctrl('c') | Key::Esc => {
+                write!(stdout, "{}{}", termion::cursor::Goto(1, 1), termion::clear::All).unwrap();
+                break;
+            },
             _ => (),
         }
 
@@ -52,6 +55,130 @@ fn main() {
 }
 
 fn parse_search(stdout: &mut RawTerminal<std::io::Stdout>, query: &String) {
-    write!(stdout, "{}{}", termion::cursor::Goto(1, 1), termion::clear::All);
-    println!("{}", query);
+    write!(stdout, "{}{}", termion::cursor::Goto(1, 1), termion::clear::All).unwrap();
+    println!("{}\x1b[{}D", query, query.len());
+
+    let category_names =    vec!["direction",               "looks",                    "sound",                    "events",                   "control",                  "sensing",                  "operators",                "variables",                "lists",                    "my blocks",                "extensions"];
+    let category_colours =  vec!["\x1b[38;2;76;151;255m",   "\x1b[38;2;153;102;255m",   "\x1b[38;2;207;99;207m",    "\x1b[38;2;255;191;0m",     "\x1b[38;2;255;171;25m",   "\x1b[38;2;92;177;214m",     "\x1b[38;2;89;192;89m",     "\x1b[38;2;255;140;26m",    "\x1b[38;2;255;102;26m",    "\x1b[38;2;255;102;128m",   "\x1b[38;2;15;189;140m"];
+
+    let blocks = [
+        ["move () steps", "direction"],
+        ["turn clockwise () degrees", "direction"],
+        ["turn counterclockwise () degrees", "direction"],
+        ["go to [ v]", "direction"],
+        ["go to x: () y: ()", "direction"],
+        ["glide () secs to [ v]", "direction"],
+        ["glide () secs to x: () y: ()", "direction"],
+        ["point in direction ()", "direction"],
+        ["point towards [ v]", "direction"],
+        ["change x by ()", "direction"],
+        ["set x to ()", "direction"],
+        ["change y by ()", "direction"],
+        ["set y to ()", "direction"],
+        ["if on edge, bounce", "direction"],
+        ["set rotation style [ v]", "direction"],
+        ["(x position)", "direction"],
+        ["(y position", "direction"],
+        ["(direction)", "direction"],
+        ["say [] for () seconds", "looks"],
+        ["say []", "looks"],
+        ["think [] for () seconds", "looks"],
+        ["think []", "looks"],
+        ["switch costume to [ v]", "looks"],
+        ["next costume", "looks"],
+        ["switch backdrop to [ v]", "looks"],
+        ["next backdrop", "looks"],
+        ["change size by ()", "looks"],
+        ["set size to () %", "looks"],
+        ["change [ v] effect by ()", "looks"],
+        ["set [ v] effect to ()", "looks"],
+        ["clear graphic effects", "looks"],
+        ["show", "looks"],
+        ["hide", "looks"],
+        ["go to [ v] layer", "looks"],
+        ["go [ v] () layers", "looks"],
+        ["(costume [ v])", "looks"],
+        ["(backdrop [ v])", "looks"],
+        ["(size)", "looks"],
+        ["play sound [ v] until done", "sound"],
+        ["start sound [ v]", "sound"],
+        ["stop all sounds", "sound"],
+        ["change [ v] effect by ()", "sound"],
+        ["set [ v] effect to ()", "sound"],
+        ["clear sound effects", "sound"],
+        ["change volume by ()", "sound"],
+        ["set volume to ()", "sound"],
+        ["(volume)", "sound"],
+        ["when green flag clicked", "events"],
+        ["when [ v] key pressed", "events"],
+        ["when this sprite clicked", "events"],
+        ["when backdrop switches to [ v]", "events"],
+        ["when [ v] > ()", "events"],
+        ["when I receive [ v]", "events"],
+        ["broadcast [ v]", "events"],
+        ["broadcast [ v] and wait", "events"],
+        ["wait () seconds", "control"],
+        ["repeat () {}", "control"],
+        ["forever {}", "control"],
+        ["if <> then {}", "control"],
+        ["if <> then {} else {}", "control"],
+        ["wait until <>", "control"],
+        ["repeat until <>", "control"],
+        ["stop [ v]", "control"],
+        ["when I start as a clone", "control"],
+        ["create clone of [ v]", "control"],
+        ["delete this clone", "control"],
+        ["<touching [ v]?>", "sensing"],
+        ["<touching colour (#)?>", "sensing"],
+        ["<color (#) is touching (#)?>", "sensing"],
+        ["(distance to [ v])", "sensing"],
+        ["ask [] and wait", "sensing"],
+        ["(answer)", "sensing"],
+        ["<key [ v] pressed?>", "sensing"],
+        ["<mouse down?>", "sensing"],
+        ["(mouse x)", "sensing"],
+        ["(mouse y)", "sensing"],
+        ["set drag mode [ v]", "sensing"],
+        ["(loudness)", "sensing"],
+        ["(timer)", "sensing"],
+        ["reset timer", "sensing"],
+        ["([ v] of [ v])", "sensing"],
+        ["(current [ v])", "sensing"],
+        ["(days since 2000)", "sensing"],
+        ["(username)", "sensing"],
+        ["(() + ())", "operators"],
+        ["(() - ())", "operators"],
+        ["(() * ())", "operators"],
+        ["(() / ())", "operators"],
+        ["(pick random () to ())", "operators"],
+        ["<[] > []>", "operators"],
+        ["<[] < []>", "operators"],
+        ["<[] = []>", "operators"],
+        ["<<> and <>>", "operators"],
+        ["<<> or <>>", "operators"],
+        ["<not <>>", "operators"],
+        ["(join [] [])", "operators"],
+        ["(letter () of [])", "operators"],
+        ["(length of [])", "operators"],
+        ["<[] contains []?>", "operators"],
+        ["(() mod ())", "operators"],
+        ["(round ())", "operators"],
+        ["([ v] of ())", "operators"],
+        ["(my variable)", "variables"],
+        ["set [ v] to []", "variables"],
+        ["change [ v] by ()", "variables"],
+        ["show variable [ v]", "variables"],
+        ["hide variable [ v]", "variables"],
+    ];
+
+    if query.len() > 0 {
+        for i in 0..blocks.len() {
+            if blocks[i][0].contains(query) {
+                println!("{}{}\x1b[0m\x1b[{}D", category_colours[category_names.iter().position(|&r| r == blocks[i][1]).unwrap()], blocks[i][0], blocks[i][0].len());
+            }
+        }
+    }
+
+    print!("{}", termion::cursor::Goto(query.len() as u16 + 1, 1));
+    stdout.flush().unwrap();
 }
