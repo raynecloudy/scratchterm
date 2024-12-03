@@ -46,6 +46,7 @@ fn main() {
             Key::Char('<') => { search.push('<'); parse_search(&mut stdout, &search); },
             Key::Char('>') => { search.push('>'); parse_search(&mut stdout, &search); },
             Key::Char('#') => { search.push('#'); parse_search(&mut stdout, &search); },
+            Key::Char('%') => { search.push('#'); parse_search(&mut stdout, &search); },
             Key::Char('?') => { search.push('?'); parse_search(&mut stdout, &search); },
             Key::Char('+') => { search.push('+'); parse_search(&mut stdout, &search); },
             Key::Char('-') => { search.push('-'); parse_search(&mut stdout, &search); },
