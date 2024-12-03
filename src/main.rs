@@ -37,6 +37,21 @@ fn main() {
             Key::Char('x') => { search.push('x'); parse_search(&mut stdout, &search); },
             Key::Char('y') => { search.push('y'); parse_search(&mut stdout, &search); },
             Key::Char('z') => { search.push('z'); parse_search(&mut stdout, &search); },
+            Key::Char('(') => { search.push('('); parse_search(&mut stdout, &search); },
+            Key::Char(')') => { search.push(')'); parse_search(&mut stdout, &search); },
+            Key::Char('[') => { search.push('['); parse_search(&mut stdout, &search); },
+            Key::Char(']') => { search.push(']'); parse_search(&mut stdout, &search); },
+            Key::Char('{') => { search.push('{'); parse_search(&mut stdout, &search); },
+            Key::Char('}') => { search.push('}'); parse_search(&mut stdout, &search); },
+            Key::Char('<') => { search.push('<'); parse_search(&mut stdout, &search); },
+            Key::Char('>') => { search.push('>'); parse_search(&mut stdout, &search); },
+            Key::Char('#') => { search.push('#'); parse_search(&mut stdout, &search); },
+            Key::Char('?') => { search.push('?'); parse_search(&mut stdout, &search); },
+            Key::Char('+') => { search.push('+'); parse_search(&mut stdout, &search); },
+            Key::Char('-') => { search.push('-'); parse_search(&mut stdout, &search); },
+            Key::Char('*') => { search.push('*'); parse_search(&mut stdout, &search); },
+            Key::Char('/') => { search.push('/'); parse_search(&mut stdout, &search); },
+            Key::Char(' ') => { search.push(' '); parse_search(&mut stdout, &search); },
             Key::Backspace => {
                 if search.chars().count() > 0 {
                     search = search[..search.chars().count()-1].parse().unwrap();
