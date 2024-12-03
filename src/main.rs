@@ -74,28 +74,28 @@ fn parse_search(stdout: &mut RawTerminal<std::io::Stdout>, query: &String) {
     write!(stdout, "{}{}", termion::cursor::Goto(1, 1), termion::clear::All).unwrap();
     println!("{}\x1b[{}D", query, query.len());
 
-    let category_names =    vec!["direction",               "looks",                    "sound",                    "events",                   "control",                  "sensing",                  "operators",                "variables",                "lists",                    "my blocks",                "extensions"];
+    let category_names =    vec!["motion",               "looks",                    "sound",                    "events",                   "control",                  "sensing",                  "operators",                "variables",                "lists",                    "my blocks",                "extensions"];
     let category_colours =  vec!["\x1b[38;2;76;151;255m",   "\x1b[38;2;153;102;255m",   "\x1b[38;2;207;99;207m",    "\x1b[38;2;255;191;0m",     "\x1b[38;2;255;171;25m",   "\x1b[38;2;92;177;214m",     "\x1b[38;2;89;192;89m",     "\x1b[38;2;255;140;26m",    "\x1b[38;2;255;102;26m",    "\x1b[38;2;255;102;128m",   "\x1b[38;2;15;189;140m"];
 
     let blocks = [
-        ["move () steps", "direction"],
-        ["turn clockwise () degrees", "direction"],
-        ["turn counterclockwise () degrees", "direction"],
-        ["go to [ v]", "direction"],
-        ["go to x: () y: ()", "direction"],
-        ["glide () secs to [ v]", "direction"],
-        ["glide () secs to x: () y: ()", "direction"],
-        ["point in direction ()", "direction"],
-        ["point towards [ v]", "direction"],
-        ["change x by ()", "direction"],
-        ["set x to ()", "direction"],
-        ["change y by ()", "direction"],
-        ["set y to ()", "direction"],
-        ["if on edge, bounce", "direction"],
-        ["set rotation style [ v]", "direction"],
-        ["(x position)", "direction"],
-        ["(y position", "direction"],
-        ["(direction)", "direction"],
+        ["move () steps", "motion"],
+        ["turn clockwise () degrees", "motion"],
+        ["turn counterclockwise () degrees", "motion"],
+        ["go to [ v]", "motion"],
+        ["go to x: () y: ()", "motion"],
+        ["glide () secs to [ v]", "motion"],
+        ["glide () secs to x: () y: ()", "motion"],
+        ["point in direction ()", "motion"],
+        ["point towards [ v]", "motion"],
+        ["change x by ()", "motion"],
+        ["set x to ()", "motion"],
+        ["change y by ()", "motion"],
+        ["set y to ()", "motion"],
+        ["if on edge, bounce", "motion"],
+        ["set rotation style [ v]", "motion"],
+        ["(x position)", "motion"],
+        ["(y position", "motion"],
+        ["(direction)", "motion"],
         ["say [] for () seconds", "looks"],
         ["say []", "looks"],
         ["think [] for () seconds", "looks"],
