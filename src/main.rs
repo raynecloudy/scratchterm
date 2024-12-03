@@ -194,7 +194,7 @@ fn parse_search(stdout: &mut RawTerminal<std::io::Stdout>, query: &String) {
                 results += 1;
             }
         }
-        if results >= 9 {
+        if results > 9 {
             println!("...");
         }
     }
