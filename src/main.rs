@@ -129,7 +129,7 @@ fn parse_search(stdout: &mut RawTerminal<std::io::Stdout>, query: &String) {
         ["create clone of [ v]", "control"],
         ["delete this clone", "control"],
         ["<touching [ v]?>", "sensing"],
-        ["<touching colour (#)?>", "sensing"],
+        ["<touching color (#)?>", "sensing"],
         ["<color (#) is touching (#)?>", "sensing"],
         ["(distance to [ v])", "sensing"],
         ["ask [] and wait", "sensing"],
