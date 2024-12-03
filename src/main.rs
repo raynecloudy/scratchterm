@@ -186,11 +186,16 @@ fn parse_search(stdout: &mut RawTerminal<std::io::Stdout>, query: &String) {
         ["hide variable [ v]", "variables"],
     ];
 
+    let mut results = 0;
     if query.len() > 0 {
         for i in 0..blocks.len() {
-            if blocks[i][0].contains(query) {
+            if blocks[i][0].contains(query) && results < 9 {
                 println!("{}{}\x1b[0m\x1b[{}D", category_colours[category_names.iter().position(|&r| r == blocks[i][1]).unwrap()], blocks[i][0], blocks[i][0].len());
+                results += 1;
             }
+        }
+        if results >= 9 {
+            println!("...");
         }
     }
 
